@@ -137,13 +137,13 @@ if uploaded_files:
         # Top 5 Artists by Playtime
         top_artists = df.groupby('artistName')['duration_minutes'].sum().nlargest(5).reset_index()
         fig1 = px.bar(top_artists, x='artistName', y='duration_minutes', title="Top 5 Artists by Playtime")
-        st.plotly_chart(fig1)
+        st.plotly_chart(fig1,use_container_width=True)
 
     with col2:
         # Top 5 Songs by Playtime
         top_songs = df.groupby('trackName')['duration_minutes'].sum().nlargest(5).reset_index()
         fig2 = px.bar(top_songs, x='trackName', y='duration_minutes', title="Top 5 Songs by Playtime")
-        st.plotly_chart(fig2)
+        st.plotly_chart(fig2,use_container_width=True)
 
     # Second Row of Charts
     # col4, col5, col6 = st.columns(3)
@@ -151,14 +151,14 @@ if uploaded_files:
         # Listening Trends by Hour
         hourly_playtime = df.groupby('hour')['duration_minutes'].sum().reset_index()
         fig3 = px.line(hourly_playtime, x='hour', y='duration_minutes', title="Listening Trends by Hour")
-        st.plotly_chart(fig3)
+        st.plotly_chart(fig3,use_container_width=True)
     col4, col5, col6 = st.columns(3)
     with col4:
         # Weekly Listening Heatmap
         active_day_hour = df.groupby(['day_of_week', 'hour'])['duration_minutes'].sum().reset_index()
         heatmap_data = active_day_hour.pivot(index='day_of_week', columns='hour', values='duration_minutes').fillna(0)
         fig4 = px.imshow(heatmap_data, labels=dict(x="Hour", y="Day", color="Minutes"), title="Weekly Listening Heatmap")
-        st.plotly_chart(fig4)
+        st.plotly_chart(fig4,use_container_width=True)
 
     # Third Row of Charts
     # col5, col6 = st.columns(2)
@@ -166,7 +166,7 @@ if uploaded_files:
         # Monthly Playtime Trends
         monthly_playtime = df.groupby('month')['duration_minutes'].sum()
         fig5 = px.line(monthly_playtime, x=monthly_playtime.index, y=monthly_playtime.values, title="Monthly Playtime Trends")
-        st.plotly_chart(fig5)
+        st.plotly_chart(fig5,use_container_width=True)
 
     with col6:
         # Playtime Distribution (Fully vs Partially Played)
@@ -177,7 +177,7 @@ if uploaded_files:
             'Count': [fully_played, partially_played]
         })
         fig6 = px.pie(play_distribution, values='Count', names='Category', title="Playtime Distribution")
-        st.plotly_chart(fig6)
+        st.plotly_chart(fig6,use_container_width=True)
 
     # Calculate Metrics
     total_hours = df['duration_minutes'].sum() / 60
