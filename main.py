@@ -79,7 +79,7 @@ if uploaded_files:
         # Detect the format
         file_format = detect_file_format(file_data)
         if file_format == "old":
-            converted_df = file_data
+            converted_df = pd.DataFrame(file_data)
         elif file_format == "new":
             converted_df = convert_new_format_to_old_format(file_data)
         else:
